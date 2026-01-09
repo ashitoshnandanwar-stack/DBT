@@ -111,7 +111,14 @@ removes multivalued dependency
 
 #### 5NF
 no unnecessary join dependency(last table divided into small table)
-
+```
+1NF → Atomic values
+2NF → No partial dependency
+3NF → No transitive dependency
+BCNF → Determinant is a super key
+4NF → No multivalued dependency
+5NF → No join dependency
+```
 
 ## Unique Key
 ```
