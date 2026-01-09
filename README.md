@@ -279,3 +279,18 @@ ID | Name
 | Minus (−)          | EXCEPT / MINUS |
 | Cartesian (×)      | CROSS JOIN     |
 
+## NoSQL and MongoDB
+
+### ⚖️ CAP Theorem
+```
+Proposed by Eric Brewer
+CAP = Consistency + Availability + Partition Tolerance
+A distributed system can guarantee only two of the three at the same time.
+```
+
+| Property                    | Meaning                       |
+| --------------------------- | ----------------------------- |
+| **Consistency (C)**         | All nodes see same data       |
+| **Availability (A)**        | Every request gets response   |
+| **Partition Tolerance (P)** | Works despite network failure |
+🔹 NoSQL systems choose CP or AP
