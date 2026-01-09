@@ -76,3 +76,21 @@ Index is automatically created on foreign key
 | Performance        | Faster for simple data  | Better for complex data |
 | Example Use        | Banking, Sales          | Multimedia, GIS         |
 
+<hr>
+
+##  1️⃣ Data Redundancy
+- 🔹 Definition : Data Redundancy means unnecessary duplication of data in a database.
+  
+## 2️⃣ Data Anomalies
+- 🔹 Definition
+Data Anomalies are errors or inconsistencies that occur due to data redundancy.
+types
+1. insertion
+2. updatation
+3. deletion
+
+## 3️⃣ Functional Dependency (FD)
+- A Functional Dependency exists when one attribute uniquely determines another attribute.
+
+## Normalization
+- it is performed to reduce the data redundancy in a database. It cause anamolies in database.
