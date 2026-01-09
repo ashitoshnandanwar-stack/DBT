@@ -94,3 +94,9 @@ types
 
 ## Normalization
 - it is performed to reduce the data redundancy in a database. It cause anamolies in database.
+
+#### Normalization Flow
+```
+UNF   →   1NF    →   2NF   →   3NF
+     (repeating)   (partial)  (transitive)
+```
