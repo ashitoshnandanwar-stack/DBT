@@ -159,6 +159,9 @@ UNIQUE (StudentId, Course)
 ## Joins
 <img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/3914a43c-fd57-4522-8b5c-e938dfe5eb04" />
 
+<img width="966" height="760" alt="image" src="https://github.com/user-attachments/assets/46d15e28-ec2e-4c56-a89e-4e0fd8f10b50" />
+
+
 ### 3️⃣ Union ( ∪ )
 ```
 🔹 Purpose
@@ -249,3 +252,9 @@ ID | Name
 ✔ Only Sneha exists in both tables
 ✔ All non-common rows are excluded
 ```
+## Union All
+| Feature            | UNION             | UNION ALL        |
+| ------------------ | ----------------- | ---------------- |
+| Removes duplicates |  Yes              |  No              |
+| Performance        | Slower            | Faster           |
+| Use case           | Clean merged data | Keep all records |
