@@ -61,3 +61,18 @@ Referenced column must be PRIMARY KEY or UNIQUE
 Data types must be same
 Index is automatically created on foreign key
 ```
+
+## 🔍 Main Differences between Relational database management system and Object RDBMS
+
+| Feature            | RDBMS                   | ORDBMS                  |
+| ------------------ | ----------------------- | ----------------------- |
+| Data Model         | Tables (rows & columns) | Tables + Objects        |
+| OOP Support        |  No                     |  Yes                    |
+| User-Defined Types |  Not supported          |  Supported              |
+| Inheritance        |  No                     |  Yes                    |
+| Methods            |  No                     |  Yes                    |
+| Complex Data       |  Difficult              |  Easy                   |
+| SQL Support        | Standard SQL            | SQL + Object extensions |
+| Performance        | Faster for simple data  | Better for complex data |
+| Example Use        | Banking, Sales          | Multimedia, GIS         |
+
