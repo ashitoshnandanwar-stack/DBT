@@ -100,3 +100,14 @@ types
 UNF   →   1NF    →   2NF   →   3NF
      (repeating)   (partial)  (transitive)
 ```
+#### What is BCNF?
+```
+A relation is in BCNF if for every functional dependency X → Y, X is a super key.
+
+Rule: Determinant must be a candidate key.
+```
+#### 4NF
+removes multivalued dependency
+
+#### 5NF
+no unnecessary join dependency(last table divided into small table)
