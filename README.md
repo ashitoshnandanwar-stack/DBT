@@ -111,3 +111,47 @@ removes multivalued dependency
 
 #### 5NF
 no unnecessary join dependency(last table divided into small table)
+
+
+## Unique Key
+```
+🔹 What is a UNIQUE Key?
+A UNIQUE key is a constraint that ensures all values in a column (or group of columns) are unique across the table.
+👉 It prevents duplicate values but allows NULL values (DBMS-dependent).
+
+🔍 Why UNIQUE Key is Used
+To avoid duplicate data
+To maintain data integrity
+To identify records uniquely (not as primary key)
+To enforce business rules
+
+UNIQUE Constraint on Email
+CREATE TABLE Student (
+  StudentId INT PRIMARY KEY,
+  Email VARCHAR(100) UNIQUE,
+  Mobile VARCHAR(10)
+);
+❌ Duplicate email not allowed
+```
+| StudentId | Email                                   | Mobile     |
+| --------- | --------------------------------------- | ---------- |
+| 101       | [amit@gmail.com](mailto:amit@gmail.com) | 9876543210 |
+| 102       | [ravi@gmail.com](mailto:ravi@gmail.com) | 9123456789 |
+
+```
+🔁 Composite UNIQUE Key
+A UNIQUE key can be created on multiple columns.
+UNIQUE (StudentId, Course)
+
+➡ Combination must be unique.
+```
+
+| Feature         | UNIQUE Key    | PRIMARY Key     |
+| --------------- | ------------- | --------------- |
+| Uniqueness      |  Yes          |  Yes            |
+| NULL allowed    |  Yes*         |  No             |
+| Count per table | Multiple      | Only one        |
+| Purpose         | Alternate key | Main identifier |
+| Index created   | Yes           | Yes             |
+
+* MySQL allows multiple NULLs in UNIQUE key.
