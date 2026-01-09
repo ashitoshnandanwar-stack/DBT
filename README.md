@@ -258,3 +258,17 @@ ID | Name
 | Removes duplicates |  Yes              |  No              |
 | Performance        | Slower            | Faster           |
 | Use case           | Clean merged data | Keep all records |
+
+```
+ example are same like union only difference sneha record print once time but in union all print double
+```
+##
+| Relational Algebra | SQL Equivalent |
+| ------------------ | -------------- |
+| Selection (σ)      | WHERE          |
+| Projection (π)     | SELECT columns |
+| Union (∪)          | UNION          |
+| Intersection (∩)   | INTERSECT      |
+| Minus (−)          | EXCEPT / MINUS |
+| Cartesian (×)      | CROSS JOIN     |
+
