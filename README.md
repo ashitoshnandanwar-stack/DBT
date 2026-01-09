@@ -155,3 +155,97 @@ UNIQUE (StudentId, Course)
 | Index created   | Yes           | Yes             |
 
 * MySQL allows multiple NULLs in UNIQUE key.
+
+## Joins
+<img width="480" height="360" alt="image" src="https://github.com/user-attachments/assets/3914a43c-fd57-4522-8b5c-e938dfe5eb04" />
+
+### 3️⃣ Union ( ∪ )
+```
+🔹 Purpose
+Combines tuples/rows from two relations
+Removes duplicates
+
+🔹 Conditions
+Same number of attributes
+Same data types
+Same order
+
+✅ Result contains all unique rows from both tables
+
+🧠 Simple Example
+Table 1: Student_A
+ID | Name
+---------
+1  | Rahul
+2  | Amit
+3  | Sneha
+
+Table 2: Student_B
+ID | Name
+---------
+3  | Sneha
+4  | Priya
+5  | Neha
+
+🔸 SQL Query Using UNION
+SELECT ID, Name FROM Student_A
+UNION
+SELECT ID, Name FROM Student_B;
+
+🔹 Result
+ID | Name
+---------
+1  | Rahul
+2  | Amit
+3  | Sneha
+4  | Priya
+5  | Neha
+
+
+✔ Duplicate row (3, Sneha) appears only once
+```
+<img width="563" height="261" alt="image" src="https://github.com/user-attachments/assets/b46ea433-78af-4a72-8660-efd67b5f5223" />
+
+
+### 4️⃣ Intersection ( ∩ ) 
+```
+🔹 Purpose
+Returns common tuples/rows from both relations
+
+🔹 Conditions
+(Same as UNION)
+
+✅ Rules of INTERSECT
+Same number of columns in both SELECT
+Same or compatible data types
+Duplicates are removed automatically
+Order of columns must match
+
+🧠 Simple Example
+Table: Student_A
+ID | Name
+---------
+1  | Rahul
+2  | Amit
+3  | Sneha
+
+Table: Student_B
+ID | Name
+---------
+3  | Sneha
+4  | Priya
+5  | Neha
+
+🔸 SQL Query Using INTERSECT
+SELECT ID, Name FROM Student_A
+INTERSECT
+SELECT ID, Name FROM Student_B;
+
+🔹 Result (Common Records Only)
+ID | Name
+---------
+3  | Sneha
+
+✔ Only Sneha exists in both tables
+✔ All non-common rows are excluded
+```
