@@ -294,3 +294,253 @@ A distributed system can guarantee only two of the three at the same time.
 | **Availability (A)**        | Every request gets response   |
 | **Partition Tolerance (P)** | Works despite network failure |
 🔹 NoSQL systems choose CP or AP
+
+
+<hr>
+
+## Group by
+
+GROUP BY is used in SQL to group rows that have the same values in a column and apply aggregate functions like: <br>
+- COUNT()
+- SUM()
+- AVG()
+- MIN()
+- MAX() <br>
+
+Suppose we have a table Employee:
+| emp_id | dept  | salary |
+| ------ | ----- | ------ |
+| 1      | IT    | 30000  |
+| 2      | HR    | 25000  |
+| 3      | IT    | 35000  |
+| 4      | HR    | 20000  |
+| 5      | Sales | 40000  |
+```
+SELECT dept, SUM(salary) AS total_salary
+FROM Employee
+GROUP BY dept;
+```
+Result:
+| dept  | total_salary |
+| ----- | ------------ |
+| IT    | 65000        |
+| HR    | 45000        |
+| Sales | 40000        |
+
+```
+Important Rules
+Every column in SELECT that is not an aggregate must appear in GROUP BY.
+WHERE filters rows before grouping.
+HAVING filters groups after grouping
+```
+```
+SELECT dept, COUNT(*) AS emp_count
+FROM Employee
+GROUP BY dept
+HAVING COUNT(*) > 1;
+This returns only departments having more than one employee.
+```
+
+### 🔹 LIKE Operator
+
+Used for pattern matching.<br>
+
+| Symbol | Meaning                  |
+| ------ | ------------------------ |
+| `%`    | Any number of characters |
+| `_`    | Single character         |
+
+```
+SELECT * FROM Student WHERE name LIKE 'A%';   -- starts with A
+SELECT * FROM Student WHERE name LIKE '_a%';  -- second letter is 'a'
+```
+
+### 🔹 DISTINCT
+- Removes duplicate values.
+```
+SELECT DISTINCT city FROM Student;
+```
+
+### 🔹 ORDER BY (Sorting)
+- Used to sort result set.
+```
+SELECT * FROM Student ORDER BY marks ASC;   -- ascending
+SELECT * FROM Student ORDER BY marks DESC;  -- descending
+```
+- in default - ascending
+  
+🔹 BETWEEN … AND
+- Used to select values within a range.
+```
+SELECT * FROM Student WHERE marks BETWEEN 50 AND 80;
+```
+
+🔹 IS NULL / IS NOT NULL
+- Used to compare NULL values.
+```
+SELECT * FROM Employee WHERE email IS NULL;
+SELECT * FROM Employee WHERE email IS NOT NULL;
+```
+
+🔹 IN / NOT IN
+- Used to match multiple values.
+```
+SELECT * FROM Student WHERE city IN ('Pune', 'Mumbai');
+SELECT * FROM Student WHERE city NOT IN ('Delhi', 'Chennai');
+```
+
+<hr>
+
+### Relation Algebra
+
+- Relational Algebra is a procedural query language used in DBMS.
+It works on relations (tables) and always produces a new relation as output.
+
+1. Selection ( σ )
+– Selects rows (tuples) based on a condition.
+```
+Syntax:
+σ_condition(Relation)
+
+Example:
+σ_marks > 60(Student)
+(SQL: SELECT * FROM Student WHERE marks > 60;)
+```
+
+2.Projection ( π ) 
+– Selects specific columns (attributes).
+```
+Syntax:
+π_column1, column2(Relation)
+
+Example:
+π_name, city(Student)
+(SQL: SELECT name, city FROM Student;)
+```
+
+3. Union ( ∪ )
+– Combines tuples from two relations.
+
+Conditions:<br>
+- Same number of attributes
+- Same data type
+- Same order of attributes
+```
+Syntax:
+R ∪ S
+
+Example:
+Student_A ∪ Student_B
+(SQL: SELECT * FROM A UNION SELECT * FROM B;)
+```
+
+4. Intersection ( ∩ )
+– Returns common tuples from both relations.
+```
+Syntax:
+R ∩ S
+
+(SQL: SELECT * FROM A INTERSECT SELECT * FROM B;)
+```
+
+5. Minus / Set Difference ( − )
+– Tuples in R but not in S.
+```
+Syntax:
+R − S
+
+(SQL: SELECT * FROM R MINUS SELECT * FROM S;
+or EXCEPT)
+```
+
+6. Cross / Cartesian Product ( × )
+– Combines every tuple of R with every tuple of S.
+```
+Syntax:
+R × S
+
+If R has m rows and S has n rows → Result has m × n rows.
+
+Example:
+Student × Course
+
+(SQL: SELECT * FROM Student, Course;)
+```
+
+```
+One-line Summary (for exam):
+Selection (σ) → filters rows
+Projection (π) → selects columns
+Union (∪) → all tuples from both relations
+Intersection (∩) → common tuples
+Minus (−) → tuples in R not in S
+Cartesian (×) → all possible combinations
+```
+
+<hr>
+
+## Copying Table Structure / Data in SQL
+
+- SQL provides different ways to copy a table’s structure, data, or both.
+
+1) Copy Only Structure (No Data)
+```
+CREATE TABLE NewTable AS
+SELECT * FROM OldTable WHERE 1=0;
+```
+- Creates NewTable with same columns.
+- No records are copied.
+
+(Alternative in MySQL) <br>
+```
+CREATE TABLE NewTable LIKE OldTable;
+```
+
+2) Copy Structure + Data
+```
+CREATE TABLE NewTable AS
+SELECT * FROM OldTable;
+```
+Copies both table design and all rows.
+
+3) Copy Only Data (Table Already Exists)
+```
+INSERT INTO NewTable
+SELECT * FROM OldTable;
+```
+
+5) Copy Selected Columns / Rows
+```
+CREATE TABLE NewTable AS
+SELECT id, name
+FROM OldTable
+WHERE marks > 60;
+```
+Copies only required columns and filtered rows.
+
+<hr>
+
+## Sequences / AUTO_INCREMENT
+
+- A sequence (or AUTO_INCREMENT) automatically generates unique numbers, usually for Primary Key.
+- In MySQL (AUTO_INCREMENT)
+```
+CREATE TABLE Student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    marks INT
+);
+```
+
+Insert without giving id:
+```
+INSERT INTO Student(name, marks) VALUES ('Amit', 75);
+INSERT INTO Student(name, marks) VALUES ('Neha', 82);
+```
+
+Output:
+```
+id   name   marks
+1    Amit   75
+2    Neha   82
+```
