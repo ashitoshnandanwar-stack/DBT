@@ -1396,3 +1396,131 @@ AFTER → Runs after data change
 NEW → New row values
 OLD → Old row values
 ```
+
+<hr>
+
+| Query       | Meaning                |
+| ----------- | ---------------------- |
+| `LIMIT 1`   | First row only         |
+| `LIMIT 2`   | First two rows         |
+| `LIMIT 1,1` | Skip first, get second |
+| `LIMIT 2,1` | Skip two, get third    |
+
+
+Correct condition:
+```
+WHERE salary IS NULL;
+
+
+Incorrect (will not work):
+
+WHERE salary = NULL;   -- ❌ Always false
+```
+
+Reason: <br>
+- NULL means “unknown”
+- Comparisons using = or != do not work with NULL
+- SQL provides special operators: IS NULL and IS NOT NULL <br>
+
+So, the correct way to check for a NULL salary is:
+```
+SELECT * 
+FROM emp 
+WHERE salary IS NULL;
+```
+
+```
+Which subquery is correlated? 
+A. 
+SELECT * FROM emp WHERE salary > (SELECT AVG(salary) FROM emp); 
+B. 
+SELECT * FROM emp e WHERE salary > (SELECT AVG(salary) FROM emp WHERE dept=e.dept); 
+C. 
+SELECT * FROM emp WHERE dept IN (10,20); 
+D. 
+SELECT * FROM emp WHERE salary > 30000;
+
+
+The correct answer is:
+B
+
+SELECT * 
+FROM emp e 
+WHERE salary > (
+    SELECT AVG(salary) 
+    FROM emp 
+    WHERE dept = e.dept
+);
+This is a correlated subquery because:
+The inner query depends on the outer query.
+It uses e.dept from the outer query.
+The subquery is executed once for each row of the outer query.
+Why others are not correlated:
+
+A
+SELECT * FROM emp WHERE salary > (SELECT AVG(salary) FROM emp);
+→ Independent subquery (runs once).
+
+C
+SELECT * FROM emp WHERE dept IN (10,20);
+→ No subquery.
+
+D
+SELECT * FROM emp WHERE salary > 30000;
+→ No subquery.
+```
+
+GRANT is used to give privileges to a user on database objects like tables, views, procedures, etc. <br>
+
+General syntax:
+```
+GRANT privilege_name ON object_name TO user_name;
+
+Examples:
+GRANT SELECT ON emp TO amit;        -- read data
+GRANT INSERT ON emp TO amit;        -- insert data
+GRANT UPDATE ON emp TO amit;        -- update data
+GRANT DELETE ON emp TO amit;        -- delete data
+
+GRANT EXECUTE ON GetEmployee TO amit;  -- run procedure/function
+
+
+So, GRANT is given to:
+Allow a user to access data
+Allow a user to modify data
+Allow a user to execute procedures/functions
+
+Opposite command:
+REVOKE privilege_name ON object_name FROM user_name;
+```
+
+```
+REPEAT is a post-test loop.
+The condition is checked after executing the loop body.
+So, the loop body executes at least once, even if the condition is false.
+
+Example (MySQL):
+
+REPEAT
+    SET x = x + 1;
+UNTIL x > 5
+END REPEAT;
+
+Here, the statements inside REPEAT run at least one time.
+```
+
+```
+LEAVE → exits the loop immediately
+
+ITERATE → skips the current iteration and continues with the next one
+```
+
+```
+A Non-scrollable cursor allows movement only in the forward direction.
+You cannot move backward or jump to previous rows.
+
+Other options:
+Scrollable → allows moving forward and backward
+Insensitive → does not reflect changes made by other users
+Read-only → data cannot be modified, but movement may still be allowed
+```
