@@ -1,0 +1,181 @@
+
+db.products.insertMany([
+{
+    name: "Wireless Mouse",
+    price: 799,
+    category: "Electronics",
+    stock: 120,
+    ratings: 4.5,
+    tags: ["computer", "accessory", "wireless"],
+    createdAt: new Date()
+},
+{
+   name: "Mechanical Keyboard",
+    price: 2499,
+    category: "Electronics",
+    stock: 80,
+    ratings: 4.8,
+    tags: ["keyboard", "mechanical"],
+    createdAt: new Date()
+},
+{
+   name: "Gaming Laptop",
+    price: 85999,
+    category: "Computers",
+    stock: 30,
+    ratings: 4.6,
+    tags: ["gaming", "laptop"],
+    createdAt: new Date()
+}
+])
+
+db.contacts.insertMany([
+    { name: "Alice", message: "Loved your website!", phone: "9876543210", createdAt:
+new Date() },
+{ name: "Bob", message: "Do you have discounts on laptops?", phone: "9123456789",
+createdAt: new Date() },
+{  name: "Carol", message: "I want to cancel my order.", phone: "9988776655", createdAt: new Date()}
+])
+
+
+# Query on find
+//db.products.find();
+
+//db.products.find().pretty();
+
+//db.products.find({ category: 'Electronics'})
+
+// db.products.find({price: {$gt: 1000}});   gt - greterthan
+
+//db.products.find({ price: {$gte: 1000, $lte: 50000}})
+
+//db.products.find({ $or:  [{category: 'Electronics'}, {stock: {$lt: 50}}]})  //logical
+
+//db.products.find({}, {name: 1, price: 1, _id:0 })  //specifi fields
+
+// db.products.find().sort({price: -1})   //descending order
+
+// db.products.find().sort({price: -1}).limit(2)  //print only two value
+
+
+# Update
+//update one
+// db.products.updateOne(
+//   {name: "Wireless Mouse",
+//   {$set: {price: 899}}
+//   )
+  
+// updateMany
+// db.products.updateMany(
+//   { category: "Electronics"},
+//   { $inc: {stock: 10}}
+//   )
+  
+ // using $push to Add to Arrays
+ // db.products.updateOne(
+  // {
+  //   name: 'Wireless Mouse'
+  // },
+  // {
+  //   $push: {tags: 'new'}
+  // }
+  // )
+
+# Delete
+//db.contacts.deleteOne({name: 'Alice'})
+
+//db.orders.deleteMany({ status: 'Delivired'})
+
+# CreateIndex
+db.products.createIndex({ name: 1})
+
+# Get all Indexes
+db.products.getIndexes();
+
+# Explain Query Performance
+db.products.find({ price : {$gt : 5000}}).explain("executionStats")
+
+# Aggregate
+1. Basic example
+db.orders.aggregate([
+  {$group: { _id: null, totalRevenue: { $sum: '$total'}}}
+  ])
+  
+
+2. Groupby Example
+db.orders.aggregate([
+  {$group : {_id: "$status", totalOrders: {$sum: 1}}}
+  ]) 
+
+3. Lookup (Join Orders with Products)
+db.orders.aggregate([
+  { $lookup : {
+    from: 'products',
+    localField: 'products.name',
+    foreignField: 'name',
+    as: 'productDetails'
+  }
+  }
+  ])
+--------------------------------------------------------------------------------------------------------
+
+db.sales.insertMany([
+  
+  {_id: 1, item: 'Apple', price: 10, quantity: 5, category: 'Fruits'},
+  {_id: 2, item: 'Banana', price: 5, quantity: 10, category: 'Fruits'},
+  {_id: 3, item: 'Carrot', price: 8, quantity: 6, category: 'Vegetable'},
+  {_id: 4, item: 'Tomato', price: 6, quantity: 8, category: 'Vegetable'},
+  {_id: 5, item: 'Mango', price: 15, quantity: 3, category: 'Fruits'},
+  
+  ])
+  
+#  Aggregation Pipeline
+
+1. $match : Filter Document
+ db.sales.aggregate([
+    { $match: {category : 'Fruits'}}
+    ])
+
+2.$projects : Select Specific Fields
+
+ db.sales.aggregate([
+    {$project: {_id: 0, item:1, price: 1}}
+    ])
+
+3. $group : Group and calculate
+Let’s calculate total sales (price × quantity) for each category:
+db.sales.aggregate([
+   { $group: 
+   {
+     _id: '$category',
+     totalSales: {$sum: {$multiply : ['$price', '$quantity']}}
+   }
+   }
+    ])
+
+4. $sort : Sort results
+Sort the total sales in descending order:
+
+
+  db.sales.aggregate([
+   {
+     $group: {
+       _id: '$category',
+       totalSales: {$sum: {$multiply: ['$price', '$quantity']}}
+     }
+   },
+   {$sort: {totalSales: 1}}  // 1 for ascending and -1 for descending
+    ])
+
+5. $match + $group
+Find total sales for only Fruits:
+ db.sales.aggregate([
+   { $match: { category: 'Fruits'} },
+   {
+     $group: {
+       _id: null,
+       totalFruitSales: {$sum: {$multiply: ['$price', '$quantity']}}
+     }
+   }
+
+    ])
